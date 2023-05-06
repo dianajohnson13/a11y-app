@@ -36,7 +36,6 @@ let [ loading, setLoading ] = useState<boolean>(false);
       setLoading(true);
       fetchUrl(newURL)
         .then(data => {
-          console.log(data)
           setData(data);
           setLoading(false);
         })
@@ -64,22 +63,15 @@ let [ loading, setLoading ] = useState<boolean>(false);
 
         {data && (
           <div>
-            <table>
-              <tr>
-                <th>Code</th>
-                <th>Context</th>
-                <th>Message</th>
-              </tr>
               {data.results.issues.map((issue: ResultIssue, idx: number) => {
                 return (
-                  <tr key={idx}>
-                    <td>{issue.code}</td>
-                    <td>{issue.context}</td>
-                    <td>{issue.message}</td>
-                  </tr>
+                  <div key={idx}>
+                    <p>{issue.message}</p>
+                    <p>{issue.context}</p>
+                    <p>{issue.code}</p>
+                  </div>
                 )
               })}
-            </table>
           </div>
         )}
       </main>
