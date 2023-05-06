@@ -36,6 +36,7 @@ let [ loading, setLoading ] = useState<boolean>(false);
       setLoading(true);
       fetchUrl(newURL)
         .then(data => {
+          console.log(data)
           setData(data);
           setLoading(false);
         })
