@@ -49,15 +49,19 @@ let [ loading, setLoading ] = useState<boolean>(false);
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header>
+        {/* logo placeholder */}
+        <div className='header-content'>
+          <strong>A11y Checker</strong>
+        </div>
       </header>
       <main>
-        <form onSubmit={handleSubmit}>
+        <form className='search-container' onSubmit={handleSubmit}>
           <label htmlFor="urlInput">
             {"Enter a URL: "}
             <input id="urlInput" />
           </label>
-          <button type="submit">Run Test</button>
+          <button className='primary-btn' type="submit">Run Test</button>
         </form>
         {loading && <div>Loading...</div>}
 
@@ -66,10 +70,10 @@ let [ loading, setLoading ] = useState<boolean>(false);
           <div>
               {data.results.issues.map((issue: ResultIssue, idx: number) => {
                 return (
-                  <div key={idx}>
-                    <p>{issue.message}</p>
-                    <p>{issue.context}</p>
-                    <p>{issue.code}</p>
+                  <div className='issue' key={idx}>
+                    <p className='issue-message'>{issue.message}</p>
+                    <p className='issue-content'><code>{issue.context}</code></p>
+                    <p className='issue-code'>{issue.code}</p>
                   </div>
                 )
               })}
