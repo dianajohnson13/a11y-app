@@ -18,13 +18,51 @@ interface Result {
   }
 }
 
+interface IssueGroup {
+    code: string,
+    message: string,
+    instances: string[], // context[]
+}
+
+interface IssueGroups {
+  [code: string]: IssueGroup
+}
+
+interface Data {
+  issueGroups: IssueGroups,
+  documentTitle: string,
+  pageUrl: string
+}
+
 const fetchUrl = async (newURL: string) => {
   const resp = await fetch(`/api/test?url=${newURL}`);
   return resp.json();
 }
 
+const structureResults = ({results: {documentTitle, pageUrl, issues}}: Result) => {
+  const issueGroups: IssueGroups = {}; 
+
+  issues.forEach(({ code, message, context }: ResultIssue) => {
+    if (issueGroups[code]) {
+      issueGroups[code].instances.push(context);
+    } else {
+      issueGroups[code] = {
+        code: code,
+        message: message,
+        instances: [context]
+      }
+    }
+  });
+
+  return {
+    documentTitle,
+    pageUrl,
+    issueGroups
+  };
+}
+
 function App() {
-let [ data, setData ] = useState<Result>();
+let [ data, setData ] = useState<Data>();
 let [ loading, setLoading ] = useState<boolean>(false);
 
   const handleSubmit = (event: FormEvent) => {
@@ -35,6 +73,9 @@ let [ loading, setLoading ] = useState<boolean>(false);
     } else {
       setLoading(true);
       fetchUrl(newURL)
+        .then(result => {
+          return structureResults(result);
+        })
         .then(data => {
           console.log(data)
           setData(data);
@@ -46,6 +87,8 @@ let [ loading, setLoading ] = useState<boolean>(false);
         });
     }
   }
+
+  const codes = data ? Object.keys(data.issueGroups) : [];
 
   return (
     <div className="App">
@@ -66,16 +109,25 @@ let [ loading, setLoading ] = useState<boolean>(false);
         {loading && <div>Loading...</div>}
 
 
-        {data && (
+        {data && data.issueGroups && codes && (
           <div>
-              {data.results.issues.map((issue: ResultIssue, idx: number) => {
-                return (
-                  <div className='issue' key={idx}>
+              {codes.map((code: string) => {
+                const issue = data ? data.issueGroups[code] : null; 
+                return issue ? (
+                  <div className='issue' key={code}>
                     <p className='issue-message'>{issue.message}</p>
-                    <p className='issue-content'><code>{issue.context}</code></p>
-                    <p className='issue-code'>{issue.code}</p>
+                    <p className='issue-content'>
+                      <code>{issue.instances[0]}</code>
+                    </p>
+                    {issue.instances.length > 1 ? (
+                        <p>
+                          {`We found ${issue.instances.length - 1} more instance${issue.instances.length > 2 ? 's' : ''} of this issue. `}
+                          <a>See all</a>
+                        </p>
+                      ) : null}
+                    <p className='issue-code'>{code}</p>
                   </div>
-                )
+                ) : null
               })}
           </div>
         )}

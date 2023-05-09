@@ -44,6 +44,10 @@ main {
     border-radius: inherit;
 }
 
+.issue-content code {
+    word-wrap: break-word;
+}
+
 .issue-code {
     background-color: var(--primary-color);
     color: white;
