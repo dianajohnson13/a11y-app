@@ -1,5 +1,8 @@
 import './App.css';
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
+
+import MainSearch from './components/MainSearch';
+import IssueBlock from './components/IssueBlock';
 
 interface ResultIssue {
   code: string;
@@ -18,7 +21,7 @@ interface Result {
   }
 }
 
-interface IssueGroup {
+export interface IssueGroup {
     code: string,
     message: string,
     instances: string[], // context[]
@@ -61,13 +64,11 @@ const structureResults = ({results: {documentTitle, pageUrl, issues}}: Result) =
   };
 }
 
-function App() {
+export default function App() {
 let [ data, setData ] = useState<Data>();
 let [ loading, setLoading ] = useState<boolean>(false);
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    let newURL = (document.getElementById('urlInput') as HTMLInputElement).value;
+  const handleSubmit = (newURL: string): void => {
     if (newURL === "") { // handle invalid URL too
       // show error message under input
     } else {
@@ -99,35 +100,13 @@ let [ loading, setLoading ] = useState<boolean>(false);
         </div>
       </header>
       <main>
-        <form className='search-container' onSubmit={handleSubmit}>
-          <label htmlFor="urlInput">
-            {"Enter a URL: "}
-            <input id="urlInput" />
-          </label>
-          <button className='primary-btn' type="submit">Run Test</button>
-        </form>
+        <MainSearch handleSubmit={handleSubmit} />
         {loading && <div>Loading...</div>}
-
-
         {data && data.issueGroups && codes && (
           <div>
               {codes.map((code: string) => {
                 const issue = data ? data.issueGroups[code] : null; 
-                return issue ? (
-                  <div className='issue' key={code}>
-                    <p className='issue-message'>{issue.message}</p>
-                    <p className='issue-content'>
-                      <code>{issue.instances[0]}</code>
-                    </p>
-                    {issue.instances.length > 1 ? (
-                        <p>
-                          {`We found ${issue.instances.length - 1} more instance${issue.instances.length > 2 ? 's' : ''} of this issue. `}
-                          <a>See all</a>
-                        </p>
-                      ) : null}
-                    <p className='issue-code'>{code}</p>
-                  </div>
-                ) : null
+                return issue ? <IssueBlock issue={issue} /> : null
               })}
           </div>
         )}
@@ -135,5 +114,3 @@ let [ loading, setLoading ] = useState<boolean>(false);
     </div>
   );
 }
-
-export default App;
