@@ -65,8 +65,8 @@ const structureResults = ({results: {documentTitle, pageUrl, issues}}: Result) =
 }
 
 export default function App() {
-let [ data, setData ] = useState<Data>();
-let [ loading, setLoading ] = useState<boolean>(false);
+const [ data, setData ] = useState<Data>();
+const [ loading, setLoading ] = useState<boolean>(false);
 
   const handleSubmit = (newURL: string): void => {
     if (newURL === "") { // handle invalid URL too
