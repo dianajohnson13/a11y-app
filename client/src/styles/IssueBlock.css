@@ -8,14 +8,17 @@
     padding: 1rem 1.5rem;
 }
 
-.issue-content {
-    padding: 1rem 1.5rem;
+.issue-instance-list {
+    margin: 1rem;
+}
+
+.issue-instance {
+    padding: .5rem 1rem;
     background: var(--code-snippet-bg);
-    margin: 1rem 1rem 2rem;
     border-radius: inherit;
 }
 
-.issue-content code {
+.issue-instance code {
     word-wrap: break-word;
 }
 
@@ -24,6 +27,6 @@
     color: white;
     padding: 1em 1.5rem;
     border-radius: 0 0 6px 6px;
-    margin: 0;
+    margin: 1rem 0 0;
     font-size: small;
 }

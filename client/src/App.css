@@ -25,4 +25,10 @@ main {
 .primary-btn {
     background-color: var(--tertiary-color);
     color: white;
+    border-radius: 4px;
+}
+
+.secondary-btn {
+    background-color: white;
+    border-radius: 4px;
 }
