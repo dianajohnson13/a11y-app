@@ -1,4 +1,36 @@
-.search-container {
-    width: fit-content;
+form {
+    width: 100%;
     margin: auto;
 }
+
+.search-container {
+    margin: 0 2rem;
+    padding: .75rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-container:focus-within {
+    border: 1px solid var(--tertiary-color);
+}
+
+.search-container input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+    padding: 0 .75rem;
+}
+
+.search-container button {
+    border: none;
+    background: none;
+}
+
+.search-container button img {
+    height: 20px;
+}
+

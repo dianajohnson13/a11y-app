@@ -1,6 +1,8 @@
 import '../styles/MainSearch.css';
 import { FormEvent } from 'react';
 
+import Search from '../assets/search.svg';
+
 interface Props {
     handleSubmit: (newURL: string) => void
 }
@@ -15,12 +17,13 @@ export default function MainSearch({
     }
 
     return (
-      <form className='search-container' onSubmit={onSubmit}>
-        <label htmlFor="urlInput">
-          {"Enter a URL: "}
-          <input id="urlInput" />
-        </label>
-        <button className='primary-btn' type="submit">Run Test</button>
+      <form onSubmit={onSubmit}>
+        <div className='search-container'>
+          <input id="urlInput" aria-label="Enter a URL" placeholder="Enter a URL" />
+          <button type="submit">
+            <img src={Search}/>
+          </button>
+        </div>
       </form>
     )
 }
