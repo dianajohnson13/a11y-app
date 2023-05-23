@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-const pa11y = require('pa11y');
+import pa11y from 'pa11y';
 
 const PORT = process.env.PORT || 5000;
 
@@ -10,10 +10,11 @@ app.get("/api", (req: Request, res: Response) => {
 });
 
 app.get('/api/test', async (req: Request, res: Response) => {
-  if (!req.query.url) {
+  const url = req.query.url as string;
+  if (!url) {
     res.status(400).json({ error: 'Missing URL' });
   } else {
-    const results = await pa11y(req.query.url);
+    const results = await pa11y(url);
     res.status(200).json({results});
   }
 });
