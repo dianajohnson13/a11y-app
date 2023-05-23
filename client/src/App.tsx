@@ -106,7 +106,7 @@ const [ loading, setLoading ] = useState<boolean>(false);
           <div>
               {codes.map((code: string) => {
                 const issue = data ? data.issueGroups[code] : null; 
-                return issue ? <IssueBlock issue={issue} /> : null
+                return issue ? <IssueBlock key={code} issue={issue} /> : null
               })}
           </div>
         )}
