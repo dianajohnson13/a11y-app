@@ -9,12 +9,62 @@ app.get("/hello", (req: Request, res: Response) => {
   res.json({ message: "Hello from server!" });
 });
 
-app.get('/api/test', async (req: Request, res: Response) => {
+// /a11y/test
+
+interface ResultIssue {
+    code: string;
+    context: string;
+    message: string;
+    selector: string;
+    type: string;
+    typeCode: number;
+  };
+  
+interface Result {
+    issues: ResultIssue[],
+    documentTitle: string,
+    pageUrl: string
+}
+
+interface IssueGroup {
+    code: string,
+    message: string,
+    instances: string[], // context[]
+}
+
+interface IssueGroups {
+  [code: string]: IssueGroup
+}
+  
+app.get('/a11y/test', async (req: Request, res: Response) => {
     const url = req.query.url as string;
     if (!url) {
       res.status(400).json({ error: 'Missing URL' });
     } else {
-      const results = await pa11y(url);
-      res.status(200).json({results});
+      const results: Result = await pa11y(url);
+      const data = structureResults(results);
+      res.status(200).json({data});
     }
 });
+
+const structureResults = ({ documentTitle, pageUrl, issues }: Result) => {
+    const issueGroups: IssueGroups = {}; 
+  
+    issues.forEach(({ code, message, context }: ResultIssue) => {
+      if (issueGroups[code]) {
+        issueGroups[code].instances.push(context);
+      } else {
+        issueGroups[code] = {
+          code: code,
+          message: message,
+          instances: [context]
+        }
+      }
+    });
+  
+    return {
+      documentTitle,
+      pageUrl,
+      issueGroups
+    };
+  }

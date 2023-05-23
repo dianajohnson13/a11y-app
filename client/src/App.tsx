@@ -4,23 +4,6 @@ import { useState } from 'react';
 import MainSearch from './components/MainSearch';
 import IssueBlock from './components/IssueBlock';
 
-interface ResultIssue {
-  code: string;
-  context: string;
-  message: string;
-  selector: string;
-  type: string;
-  typeCode: number;
-};
-
-interface Result {
-  results: {
-    issues: ResultIssue[],
-    documentTitle: string,
-    pageUrl: string
-  }
-}
-
 export interface IssueGroup {
     code: string,
     message: string,
@@ -38,30 +21,8 @@ interface Data {
 }
 
 const fetchUrl = async (newURL: string) => {
-  const resp = await fetch(`/api/test?url=${newURL}`);
+  const resp = await fetch(`/a11y/test?url=${newURL}`);
   return resp.json();
-}
-
-const structureResults = ({results: {documentTitle, pageUrl, issues}}: Result) => {
-  const issueGroups: IssueGroups = {}; 
-
-  issues.forEach(({ code, message, context }: ResultIssue) => {
-    if (issueGroups[code]) {
-      issueGroups[code].instances.push(context);
-    } else {
-      issueGroups[code] = {
-        code: code,
-        message: message,
-        instances: [context]
-      }
-    }
-  });
-
-  return {
-    documentTitle,
-    pageUrl,
-    issueGroups
-  };
 }
 
 export default function App() {
@@ -74,12 +35,8 @@ const [ loading, setLoading ] = useState<boolean>(false);
     } else {
       setLoading(true);
       fetchUrl(newURL)
-        .then(result => {
-          return structureResults(result);
-        })
-        .then(data => {
-          console.log(data)
-          setData(data);
+        .then(res => {
+          setData(res.data);
           setLoading(false);
         })
         .catch(error => {
@@ -89,7 +46,7 @@ const [ loading, setLoading ] = useState<boolean>(false);
     }
   }
 
-  const codes = data ? Object.keys(data.issueGroups) : [];
+  const codes = data && data.issueGroups ? Object.keys(data.issueGroups) : [];
 
   return (
     <div className="App">
