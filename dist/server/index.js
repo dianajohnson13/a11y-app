@@ -13,21 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const pa11y = require('pa11y');
-const PORT = process.env.PORT || 5000;
+const pa11y_1 = __importDefault(require("pa11y"));
 const app = (0, express_1.default)();
-app.get("/api", (req, res) => {
+exports.default = app;
+// routes to be moved
+app.get("/hello", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
 app.get('/api/test', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.query.url) {
+    const url = req.query.url;
+    if (!url) {
         res.status(400).json({ error: 'Missing URL' });
     }
     else {
-        const results = yield pa11y(req.query.url);
+        const results = yield (0, pa11y_1.default)(url);
         res.status(200).json({ results });
     }
 }));
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-});

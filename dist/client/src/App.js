@@ -69,7 +69,7 @@ function App() {
     const codes = data ? Object.keys(data.issueGroups) : [];
     return ((0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "App" }, { children: [(0, jsx_runtime_1.jsx)("header", { children: (0, jsx_runtime_1.jsx)("div", Object.assign({ className: 'header-content' }, { children: (0, jsx_runtime_1.jsx)("strong", { children: "A11y Checker" }) })) }), (0, jsx_runtime_1.jsxs)("main", { children: [(0, jsx_runtime_1.jsx)(MainSearch_1.default, { handleSubmit: handleSubmit }), loading && (0, jsx_runtime_1.jsx)("div", { children: "Loading..." }), data && data.issueGroups && codes && ((0, jsx_runtime_1.jsx)("div", { children: codes.map((code) => {
                             const issue = data ? data.issueGroups[code] : null;
-                            return issue ? (0, jsx_runtime_1.jsx)(IssueBlock_1.default, { issue: issue }) : null;
+                            return issue ? (0, jsx_runtime_1.jsx)(IssueBlock_1.default, { issue: issue }, code) : null;
                         }) }))] })] })));
 }
 exports.default = App;
