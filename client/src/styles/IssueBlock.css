@@ -5,16 +5,25 @@
 }
 
 .issue-message {
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.5rem 0;
+}
+
+.issue h3 {
+    margin: 0 1.5rem;
 }
 
 .issue-instance-list {
     margin: 1rem;
 }
 
-.issue-instance {
+.issue-instance, .issue-instance-count {
     padding: .5rem 1rem;
 }
+
+.issue-instance-count {
+    margin-top: 0;
+}
+
 .instance-selector {
     padding: .5rem 1rem;
     background: var(--primary-color);
