@@ -3,15 +3,23 @@ import '../styles/IssueBlock.css';
 import { IssueGroup } from '../App';
 import { useState } from 'react';
 
+interface Instance {
+    context: string,
+    selector: string
+}
+
 interface Props {
     issue: IssueGroup
 }
 
-function Instance({instance}: {instance: string}) {
+function Instance({context, selector}: Instance): JSX.Element {
     return (
-        <p className='issue-instance'>
-            <code>{instance}</code>
-        </p>
+        <div className='issue-instance'>
+            <p className='instance-selector'>{selector}</p>
+            <p className='instance-context'>
+                <code>{context}</code>
+            </p>
+        </div>
     );
 }
 
@@ -30,14 +38,18 @@ export default function IssueBlock({
             <div className='issue-instance-list'>
                 {showAll ? (
                     <>
-                        {instances.map(instance => (
-                            <Instance instance={instance} key={instance} />
+                        {instances.map(({context, selector}: Instance) => (
+                            <Instance
+                                context={context}
+                                selector={selector}
+                                key={context}
+                            />
                         ))}
                         <button className='secondary-btn' onClick={() => setShowAll(false)}>Show less</button>
                     </>
                 ) : (
                     <>
-                        <Instance instance={instances[0]} />
+                        <Instance context={instances[0].context} selector={instances[0].selector} />
                         {instances.length > 1 ? (
                             <p>
                                 {`We found ${instances.length - 1} more instance${instances.length > 2 ? 's' : ''} of this issue. `}

@@ -29,7 +29,7 @@ interface Result {
 interface IssueGroup {
     code: string,
     message: string,
-    instances: string[], // context[]
+    instances: Array<{context: string, selector: string}>,
 }
 
 interface IssueGroups {
@@ -50,14 +50,14 @@ app.get('/a11y/test', async (req: Request, res: Response) => {
 const structureResults = ({ documentTitle, pageUrl, issues }: Result) => {
     const issueGroups: IssueGroups = {}; 
   
-    issues.forEach(({ code, message, context }: ResultIssue) => {
+    issues.forEach(({ code, message, context, selector }: ResultIssue) => {
       if (issueGroups[code]) {
-        issueGroups[code].instances.push(context);
+        issueGroups[code].instances.push({ context, selector });
       } else {
         issueGroups[code] = {
           code: code,
           message: message,
-          instances: [context]
+          instances: [{ context, selector } ]
         }
       }
     });

@@ -7,7 +7,7 @@ import IssueBlock from './components/IssueBlock';
 export interface IssueGroup {
     code: string,
     message: string,
-    instances: string[], // context[]
+    instances: Array<{context: string, selector: string}>
 }
 
 interface IssueGroups {

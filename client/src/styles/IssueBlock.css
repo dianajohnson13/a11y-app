@@ -14,11 +14,20 @@
 
 .issue-instance {
     padding: .5rem 1rem;
+}
+.instance-selector {
+    padding: .5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    margin: 0;
+}
+.instance-context {
+    padding: .5rem 1rem;
+    margin: 0;
     background: var(--code-snippet-bg);
-    border-radius: inherit;
 }
 
-.issue-instance code {
+.issue-context code {
     word-wrap: break-word;
 }
 
