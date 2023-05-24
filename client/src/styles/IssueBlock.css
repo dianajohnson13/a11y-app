@@ -27,7 +27,7 @@
     background: var(--code-snippet-bg);
 }
 
-.issue-context code {
+.instance-context code {
     word-wrap: break-word;
 }
 
