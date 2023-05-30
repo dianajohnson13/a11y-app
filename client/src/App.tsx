@@ -21,7 +21,7 @@ interface Data {
 }
 
 const fetchUrl = async (newURL: string) => {
-  const resp = await fetch(`/a11y/test?url=${newURL}`);
+  const resp = await fetch(`/api/a11y/test?url=${newURL}`);
   return resp.json();
 }
 
