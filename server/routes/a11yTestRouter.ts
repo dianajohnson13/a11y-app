@@ -10,8 +10,8 @@ import type {
 const router = express.Router();
   
 router.get('/test', async (req: Request, res: Response) => {
+  try {
     const url = req.query.url as string;
-    console.log('here', req)
     if (!url) {
       res.status(400).json({ error: 'Missing URL' });
     } else {
@@ -19,6 +19,9 @@ router.get('/test', async (req: Request, res: Response) => {
       const data = structureResults(results);
       res.status(200).json({data});
     }
+  } catch (error) {
+    res.status(500).json({error: (error as Error).message});
+  }
 });
 
 const structureResults = ({ documentTitle, pageUrl, issues }: Result) => {
