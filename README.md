@@ -9,6 +9,9 @@ Playing around with the Pa11y accessibility testing API
 ### Install dependencies for client
 > npm run client-install
 
+### Build
+> npm run build
+
 ### Run the client & server with concurrently
 > npm run dev
 
@@ -25,3 +28,4 @@ Server runs on http://localhost:5000 and client on http://localhost:3000
 - Typescript
 - Node
 - Express
+- Postgres
