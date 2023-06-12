@@ -24,7 +24,7 @@ router.post('/', async (req: Request, res: Response) => {
     // return the new user
     const newUser = users.rows[0];
     res.json({user: {
-      userId: newUser.userId,
+      userId: newUser.user_id,
       name: newUser.user_email,
       email: newUser.user_email
     }});
