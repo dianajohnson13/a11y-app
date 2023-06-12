@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import pool from '../db';
 import type { User } from '../types/users'
+import { makeTokens } from '../utils/auth';
 
 const router = express.Router();
 
@@ -55,12 +56,5 @@ router.delete('/refresh_token', (req: Request, res: Response) => {
     res.status(401).json({error: (error as Error).message});
   }
 });
-
-// move to util
-const makeTokens = (user: User) => {
-  const accessToken = jwt.sign(user, (process.env.ACCESS_TOKEN_SECRET as string), {expiresIn: '15m'});
-  const refreshToken = jwt.sign(user, (process.env.REFRESH_TOKEN_SECRET as string), {expiresIn: '5d'});
-  return { accessToken, refreshToken };
-}
 
 export default router;
