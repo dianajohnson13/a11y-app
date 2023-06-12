@@ -28,6 +28,35 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
+// Uses refresh token to generate new token
+router.get('/refresh_token', (req: Request, res: Response) => {
+  try {
+    const refreshToken = req.cookies.refresh_token;
+  
+    if (refreshToken === null) return res.status(401).json('Missing token');
+    // If refresh token is accurate, remake token
+    jwt.verify(refreshToken, (process.env.ACCESS_TOKEN_SECRET as string), (error: any, user: any) => {
+      if (error) return res.status(403).json({error:(error as Error).message});
+      let tokens = makeTokens(user as User);
+      res.cookie('refresh_token', tokens.refreshToken, {httpOnly: true});
+      return res.json(tokens);
+    });
+  } catch (error) {
+    res.status(401).json({error: (error as Error).message});
+  }
+});
+
+// Delete refresh token to logout  
+router.delete('/refresh_token', (req: Request, res: Response) => {
+  try {
+    res.clearCookie('refresh_token');
+    return res.status(200).json({message:'Refresh token deleted.'});
+  } catch (error) {
+    res.status(401).json({error: (error as Error).message});
+  }
+});
+
+// move to util
 const makeTokens = (user: User) => {
   const accessToken = jwt.sign(user, (process.env.ACCESS_TOKEN_SECRET as string), {expiresIn: '15m'});
   const refreshToken = jwt.sign(user, (process.env.REFRESH_TOKEN_SECRET as string), {expiresIn: '5d'});
