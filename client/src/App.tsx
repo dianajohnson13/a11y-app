@@ -1,46 +1,7 @@
 import './App.css';
-import { useState } from 'react';
-
-import MainSearch from './components/MainSearch';
-import IssueBlock from './components/IssueBlock';
-import type { IssueGroup } from './types/issues';
-
-interface Data {
-  issueGroups: {
-    [code: string]: IssueGroup
-  },
-  documentTitle: string,
-  pageUrl: string
-}
-
-const fetchUrl = async (newURL: string) => {
-  const resp = await fetch(`/api/a11y/test?url=${newURL}`);
-  return resp.json();
-}
+import Checker from './pages/Checker';
 
 export default function App() {
-const [ data, setData ] = useState<Data>();
-const [ loading, setLoading ] = useState<boolean>(false);
-
-  const handleSubmit = (newURL: string): void => {
-    if (newURL === "") { // handle invalid URL too
-      // show error message under input
-    } else {
-      setLoading(true);
-      fetchUrl(newURL)
-        .then(res => {
-          setData(res.data);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.log(error.message);
-          setLoading(false);
-        });
-    }
-  }
-
-  const codes = data && data.issueGroups ? Object.keys(data.issueGroups) : [];
-
   return (
     <div className="App">
       <header>
@@ -50,16 +11,7 @@ const [ loading, setLoading ] = useState<boolean>(false);
         </div>
       </header>
       <main>
-        <MainSearch handleSubmit={handleSubmit} />
-        {loading && <div>Loading...</div>}
-        {data && data.issueGroups && codes && (
-          <div>
-              {codes.map((code: string) => {
-                const issue = data ? data.issueGroups[code] : null; 
-                return issue ? <IssueBlock key={code} issue={issue} /> : null
-              })}
-          </div>
-        )}
+        <Checker />
       </main>
     </div>
   );
