@@ -1,7 +1,8 @@
-import '../styles/IssueBlock.css';
-
-import { IssueGroup } from '../App';
 import { useState } from 'react';
+
+import '../styles/IssueBlock.css';
+import type { IssueGroup } from '../types/issues';
+
 
 // TO DO: Move parseIssueCode and generateTechniqueUrl to backend
 function parseIssueCode(code: string) {

@@ -3,19 +3,12 @@ import { useState } from 'react';
 
 import MainSearch from './components/MainSearch';
 import IssueBlock from './components/IssueBlock';
-
-export interface IssueGroup {
-    code: string,
-    message: string,
-    instances: Array<{context: string, selector: string}>
-}
-
-interface IssueGroups {
-  [code: string]: IssueGroup
-}
+import type { IssueGroup } from './types/issues';
 
 interface Data {
-  issueGroups: IssueGroups,
+  issueGroups: {
+    [code: string]: IssueGroup
+  },
   documentTitle: string,
   pageUrl: string
 }
