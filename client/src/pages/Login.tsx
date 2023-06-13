@@ -1,17 +1,11 @@
 import '../styles/Auth.css';
 
-export default function Signup() {
+export default function Login() {
   return (
-    <form className='auth-form signup-form'>
+    <form className='auth-form login-form'>
         <div>
-            <h1>Sign Up</h1>
-            <p>Please complete this form to create an account.</p>
-
-            <div className="auth-field required">
-              <label htmlFor="email"><b>Name</b></label>
-              <br/>
-              <input type="text" name="email" required />
-            </div>
+            <h1>Log In</h1>
+            <p>Please complete this form to log in to your account.</p>
 
             <div className="auth-field required">
               <label htmlFor="email"><b>Email</b></label>
@@ -26,9 +20,9 @@ export default function Signup() {
             </div>
 
             <div className='footer'>
-              <button className="primary-btn" type="submit">Sign Up</button>
+              <button className="primary-btn" type="submit">Log In</button>
             </div>
-            {/* Already have an account? login */}
+            {/* no account? sign up */}
         </div>
     </form>
   );

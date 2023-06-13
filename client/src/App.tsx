@@ -7,6 +7,7 @@ import {
 import './App.css';
 import Checker from './pages/Checker';
 import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
           <Routes>
               <Route path="/" element={<Checker />}/>
               <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
           </Routes>
         </main>
       </div>
