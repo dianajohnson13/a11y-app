@@ -1,0 +1,42 @@
+.auth-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+.auth-field {
+    margin-bottom: 1rem;
+}
+
+.auth-field input {
+    border-radius: 4px;
+    padding: .5em;
+    border: 2px solid var(--primary-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.auth-field input:focus-visible {
+    outline: none;
+    border: 2px solid var(--tertiary-color);
+}
+
+label {
+    margin-bottom: .5rem;
+    display: inline-block;
+}
+
+.required label:after {
+    content:"*";
+    color: red;
+}
+
+.auth-form .footer {
+    display: flex;
+}
+
+.auth-form .footer button {
+    width: 100%;
+    padding: 1em;
+    margin-top: 1em;
+    font-size: inherit;
+}
