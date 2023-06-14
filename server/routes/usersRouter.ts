@@ -2,8 +2,10 @@ import express, { Request, Response } from 'express';
 import pool from '../db';
 import bcrypt from 'bcrypt';
 
+// Routes under '/api/users'
 const router = express.Router();
 
+// TO-DO include auth check
 router.get('/', async (req: Request, res: Response) => {
   try {
     const users = await pool.query('SELECT * FROM users');

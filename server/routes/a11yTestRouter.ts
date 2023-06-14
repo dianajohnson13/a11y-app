@@ -7,6 +7,7 @@ import type {
   IssueGroups
 } from '../types/a11yTestResults';
 
+// Routes under '/api/a11y'
 const router = express.Router();
   
 router.get('/test', async (req: Request, res: Response) => {

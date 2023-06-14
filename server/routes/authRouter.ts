@@ -6,6 +6,7 @@ import pool from '../db';
 import type { User } from '../types/users'
 import { makeTokens } from '../utils/auth';
 
+// Routes under '/api/auth'
 const router = express.Router();
 
 router.post('/login', async (req: Request, res: Response) => {
