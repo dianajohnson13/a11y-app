@@ -20,8 +20,8 @@ export default function MainSearch({
       <form onSubmit={onSubmit}>
         <div className='search-container'>
           <input id="urlInput" aria-label="Enter a URL" placeholder="Enter a URL" />
-          <button type="submit">
-            <img src={Search}/>
+          <button type="submit" title="search">
+            <img alt="" src={Search}/>
           </button>
         </div>
       </form>
